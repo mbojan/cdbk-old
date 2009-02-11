@@ -1,0 +1,17 @@
+exportPattern("^[[:alpha:]]+")
+exportMethods(
+    "cdbkData",
+    "cdbkDf",
+    "cdbkTech",
+    "cdbkTxt",
+    "prettyMatrix",
+    "show" 
+)
+exportClasses(
+    "cdbkData",
+     "cdbkDf",
+     "cdbkObject",
+     "cdbkTech",
+     "cdbkVar",
+     "cdbkVector" 
+)

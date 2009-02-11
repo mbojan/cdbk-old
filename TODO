@@ -1,0 +1,60 @@
+
+Stopped writing documentation at 'cdbkTxt'. Search for TODO on all files.
+
+Namespace exports everything. Shouldn't.
+
+Add CITATION file
+
+Vignette which explains basic functionality.
+
+Vignette with a gallery of the printing and documentation objects. Is it
+possible to show how something will look in HTML?
+
+
+
+
+
+
+
+
+================================================================================
+Storing data and documentation in a relational database
+
+
+
+___Data base schema______
+
+Value labels: Collection of relations value-label
+
+Missing values: Single relation varName-misval
+
+Variables: Single table varName-varlab-vallab, where vallab is either the name
+of the relation or the id.
+
+Data: Raw data stored in a single table caseid x varName
+
+
+In the simplest scheme all information can be stored in four tables.
+
+Desired functionality:
+
+1. Checking consistensy of raw data
+
+2. Checking the consistency of documentation with data
+
+3. Implementing filter checks
+
+4. Automating the production of documentation
+
+
+Fantasizing:
+
+1. Perhaps it is not neccessary to process the data and write it to DB, just
+operate on the existing format as far as it supports RDBMS-like interface.
+Large data do not have tobe stored in the R memory.
+
+2. Rewriting SPSS data in chunks using ODBC (not loading everything to memory)
+or some other RDBMS engine.
+
+Optimally the functions should be independent of the DB driver used, now SQLite
+is hardcoded.
