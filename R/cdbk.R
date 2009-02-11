@@ -109,6 +109,35 @@ function(object)
 } )
 
 
+
+#-------------------------------------------------------------------------------
+
+# frequency tables
+
+setClass("cdbkFreq", representation(
+	varname="character",
+	freq = "numeric",
+	pct="numeric",
+	labels="character"),
+    contains="cdbkVar")
+
+setValidity("cdbkFreq",
+function(object)
+{
+    rval <- NULL
+    if(length(object@freq) != length(object@pct))
+	rval <- c(rval, "length mismatch for freq and pct")
+    if(length(object@freq) != length(object@labels))
+	rval <- c(rval, "length mismatch for freq and labels")
+    if(is.null(rval))
+	return(TRUE)
+    else return(rval)
+} )
+
+
+
+
+
 #===============================================================================
 ###| Generics
 #===============================================================================
@@ -117,6 +146,7 @@ function(object)
 setGeneric("cdbkTech", function(object, ...) standardGeneric("cdbkTech"))
 setGeneric("cdbkDf", function(object, ...) standardGeneric("cdbkDf"))
 setGeneric("cdbkData", function(dat, vars, ...) standardGeneric("cdbkData"))
+setGeneric("cdbkFreq", function(object, ...) standardGeneric("cdbkFreq"))
 
 # printing methods to various formats
 setGeneric("cdbkTxt", function(object, ...) standardGeneric("cdbkTxt"))
@@ -167,6 +197,19 @@ function(object, varname=NULL,
 
 
 
+setMethod("cdbkFreq", "cdbkVector",
+function(object, varname=NULL, ...)
+{
+    if(is.null(varname))
+	vname <- deparse(substitute(object, parent.frame()))
+    else vname <- varname
+    tab <- table(object, exclude=NULL)
+    new("cdbkFreq", varname=vname, freq=as.numeric(tab),
+	pct=as.numeric(tab/sum(tab)*100),
+	labels=paste(names(tab)) )
+} )
+    
+    
 
 
 
@@ -353,6 +396,26 @@ if(FALSE)
     cdbkTxt(o)
     cdbkTxt(o, file="dupa.txt")
 }
+
+
+
+
+
+
+setMethod("cdbkTxt", "cdbkFreq",
+function(object, file="", append=FALSE, ...)
+{
+    d <- data.frame(n=object@freq, pct=object@pct, row.names=object@labels)
+    if(file=="")
+	print(d, quote=FALSE)
+    else
+    {
+	sink(file=file, append=TRUE)
+	print( d, quote=FALSE, print.gap=4)
+	cat("\n\n\n")
+	sink()
+    }
+} )
 
 
 #===============================================================================

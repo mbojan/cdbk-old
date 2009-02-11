@@ -5,7 +5,8 @@ exportMethods(
     "cdbkTech",
     "cdbkTxt",
     "prettyMatrix",
-    "show" 
+    "show",
+    "cdbkFreq"
 )
 exportClasses(
     "cdbkData",
@@ -13,5 +14,6 @@ exportClasses(
      "cdbkObject",
      "cdbkTech",
      "cdbkVar",
-     "cdbkVector" 
+     "cdbkVector" ,
+	"cdbkFreq"
 )
