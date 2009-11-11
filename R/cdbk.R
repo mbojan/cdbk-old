@@ -45,7 +45,7 @@ setClass("cdbkVar", contains="cdbkObject")
 # class for allowable types of variable vectors
 setClassUnion( "cdbkVector", c("numeric", "character", "integer", "logical", "factor"))
 
-setOldClass("object.size")
+setOldClass("object_size")
 
 
 #-------------------------------------------------------------------------------
@@ -61,7 +61,7 @@ setClass("cdbkTech", representation(
 	hasnames="logical", # is there a names attribute
 	uvalues="numeric", # number of unique values
 	nas="numeric", # number of NAs
-	size="object.size"), # size in bytes
+	size="object_size"), # size in bytes
     contains="cdbkVar"
 )
 
@@ -78,7 +78,7 @@ setClass("cdbkDf", representation(
 	ncases="numeric", # number of rows
 	nvars="numeric", # number of variables
 	ncomplete="numeric", # number of complete cases
-	size="object.size"), # size in bytes
+	size="object_size"), # size in bytes
     contains="cdbkObject")
 
 #-------------------------------------------------------------------------------
