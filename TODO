@@ -1,3 +1,12 @@
+		       Package 'cdbk' TODO list and notes
+
+Contents
+	TODO list			<url:^TODO>
+	Storing codebook in RDBMS	<url:^Storing data>
+	Some usecases			<url:^Use cases>
+
+=============================================================================
+TODO
 
 Stopped writing documentation at 'cdbkTxt'. Search for TODO on all files.
 
@@ -17,7 +26,7 @@ possible to show how something will look in HTML?
 
 
 
-================================================================================
+=============================================================================
 Storing data and documentation in a relational database
 
 
@@ -58,3 +67,16 @@ or some other RDBMS engine.
 
 Optimally the functions should be independent of the DB driver used, now SQLite
 is hardcoded.
+
+
+
+=============================================================================
+Use cases
+
+
+Calling something simple, like cdbk(dataframe) to get the whole codebook
+displayed on screen.
+
+Calling cdbk(dataframe, file=file) to get it printed to file.
+
+
