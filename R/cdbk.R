@@ -41,10 +41,13 @@ setClass("cdbkObject")
 # class for variable descriptions
 setClass("cdbkVar", contains="cdbkObject")
 
+# class for data frame descriptions
+setClass("cdbkDf", contains="cdbkObject")
 
 # class for allowable types of variable vectors
 setClassUnion( "cdbkVector", c("numeric", "character", "integer", "logical", "factor"))
 
+# for size slots with values from calling object.size()
 setOldClass("object_size")
 
 
@@ -54,7 +57,7 @@ setOldClass("object_size")
 
 # Brief, technical, summary of a (vector) variable.
 
-setClass("cdbkTech", representation(
+setClass("varTech", representation(
 	varname="character", # variable name
 	varclass="character", # variable class
 	varmode="character", # variable storage mode
@@ -66,64 +69,18 @@ setClass("cdbkTech", representation(
 )
 
 
-#-------------------------------------------------------------------------------
-# Classes for data frames
-#-------------------------------------------------------------------------------
 
 
-# Class for data frames. Contains some data-level descriptives: number of
-# variables, number of observations, number of complete cases.
+# Frequency table
 
-setClass("cdbkDf", representation(
-	ncases="numeric", # number of rows
-	nvars="numeric", # number of variables
-	ncomplete="numeric", # number of complete cases
-	size="object_size"), # size in bytes
-    contains="cdbkObject")
-
-#-------------------------------------------------------------------------------
-# Combined information on variables and data frame
-#-------------------------------------------------------------------------------
-
-
-# Class for "complete" data set
-
-setClass("cdbkData", representation(
-	name="character", # name of the data set
-	dat="cdbkDf", # data frame information
-	vars="list"), # list of variable documentation objects
-    contains="cdbkObject")
-
-
-setValidity("cdbkData",
-function(object)
-{
-    rval <- NULL
-    # check if all elements of 'vars' contain 'cdbkVar' objects
-    isvar <- sapply( object@vars,
-	function(x) extends( data.class(x), "cdbkVar") )
-    if( !all(isvar) )
-	rval <- c(rval, paste("not all components of 'vars' extend class 'cdbkVar':",
-	    paste(which(!isvar), collapse=", ") ))
-    if(is.null(rval))
-	return(TRUE)
-    else return(rval)
-} )
-
-
-
-#-------------------------------------------------------------------------------
-
-# frequency tables
-
-setClass("cdbkFreq", representation(
+setClass("varFreq", representation(
 	varname="character",
 	freq = "numeric",
 	pct="numeric",
 	labels="character"),
     contains="cdbkVar")
 
-setValidity("cdbkFreq",
+setValidity("varFreq",
 function(object)
 {
     rval <- NULL
@@ -138,6 +95,24 @@ function(object)
 
 
 
+#-------------------------------------------------------------------------------
+# Classes for data frames
+#
+# Data-level descriptions
+#-------------------------------------------------------------------------------
+
+
+# Class for data frames. Contains some data-level descriptives: number of
+# variables, number of observations, number of complete cases.
+
+setClass("dfTech", representation(
+	ncases="numeric", # number of rows
+	nvars="numeric", # number of variables
+	ncomplete="numeric", # number of complete cases
+	size="object_size"), # size in bytes
+    contains="cdbkDf")
+
+
 
 
 #===============================================================================
@@ -145,13 +120,12 @@ function(object)
 #===============================================================================
 
 # constructors for classes
-setGeneric("cdbkTech", function(object, ...) standardGeneric("cdbkTech"))
-setGeneric("cdbkDf", function(object, ...) standardGeneric("cdbkDf"))
-setGeneric("cdbkData", function(dat, vars, ...) standardGeneric("cdbkData"))
-setGeneric("cdbkFreq", function(object, ...) standardGeneric("cdbkFreq"))
+setGeneric("varTech", function(object, ...) standardGeneric("varTech"))
+setGeneric("varFreq", function(object, ...) standardGeneric("varFreq"))
+setGeneric("dfTech", function(object, ...) standardGeneric("dfTech"))
 
-# printing methods to various formats
 setGeneric("cdbkTxt", function(object, ...) standardGeneric("cdbkTxt"))
+
 
 # misc utilities
 setGeneric("prettyMatrix", function(object) standardGeneric("prettyMatrix"))
@@ -175,7 +149,7 @@ setGeneric("prettyMatrix", function(object) standardGeneric("prettyMatrix"))
 #-------------------------------------------------------------------------------
 
 
-setMethod("cdbkTech", "cdbkVector",
+setMethod("varTech", "cdbkVector",
 function(object, varname=NULL, 
     varclass=class(object),
     varmode=storage.mode(object),
@@ -187,26 +161,26 @@ function(object, varname=NULL,
     if(is.null(varname))
 	vname <- deparse(substitute(object, parent.frame()))
     else vname <- varname
-    new("cdbkTech", varname=vname,
-	varclass=varclass,
-	varmode=varmode,
-	hasnames=hasnames,
-	nas=nas,
-	uvalues=uvalues,
-	size=size )
+    new("varTech", varname=vname,
+        varclass=varclass,
+        varmode=varmode,
+        hasnames=hasnames,
+        nas=nas,
+        uvalues=uvalues,
+        size=size )
 } )
 
 
 
 
-setMethod("cdbkFreq", "cdbkVector",
+setMethod("varFreq", "cdbkVector",
 function(object, varname=NULL, ...)
 {
     if(is.null(varname))
-	vname <- deparse(substitute(object, parent.frame()))
+        vname <- deparse(substitute(object, parent.frame()))
     else vname <- varname
-    tab <- table(object, exclude=NULL)
-    new("cdbkFreq", varname=vname, freq=as.numeric(tab),
+        tab <- table(object, exclude=NULL)
+    new("varFreq", varname=vname, freq=as.numeric(tab),
 	pct=as.numeric(tab/sum(tab)*100),
 	labels=paste(names(tab)) )
 } )
@@ -225,13 +199,13 @@ function(object, varname=NULL, ...)
 
 
 #===============================================================================
-# Constructing 'cdbkDf' objects
+# Constructing 'dfTech' objects
 #===============================================================================
 
 
 
 
-setMethod("cdbkDf", "data.frame",
+setMethod("dfTech", "data.frame",
 function(object,
     ncases=nrow(object), nvars=ncol(object),
     size=object.size(object), ...)
@@ -243,34 +217,6 @@ function(object,
 } )
 
 
-    
-
-
-
-#===============================================================================
-# Constructing 'cdbkData' objects
-#===============================================================================
-
-setMethod("cdbkData", signature( dat="cdbkDf", vars="list"),
-function( dat, vars, name=deparse(substitute(dat)), ...)
-{
-    new("cdbkData", dat=dat, vars=vars, name=name)
-} )
-
-# If 'varlist' is a character then it specifies the name of the variable
-# processing function. The variable processing functions is assumed to take
-# at least two arguments (in that order) 'dat' variable vector, and 'varname'
-# for a variable name as character.
-setMethod("cdbkData", signature( dat="data.frame", vars="character"),
-function( dat, vars, name=deparse(substitute(dat)), ... )
-{
-    d <- cdbkDf( dat )
-    # make variable doc objects
-    vn <- names(dat)
-    l <- lapply( vn, function(x) do.call(vars, list(object=dat[[x]], varname=x)))
-    cdbkData( dat=d, vars=l, name=name, ...)
-} )
-    
 
 
 
@@ -279,7 +225,7 @@ function( dat, vars, name=deparse(substitute(dat)), ... )
 #===============================================================================
 
 
-setMethod("show", "cdbkTech",
+setMethod("show", "varTech",
 function(object)
 {
     cat("Variable summary\n")
@@ -312,13 +258,6 @@ function(object)
 
 
 
-setMethod("show", "cdbkData",
-function(object)
-{
-    show( object@dat )
-    cat("  Number of documented variables:", length(object@vars), "\n")
-} )
-
 
 
 
@@ -329,7 +268,7 @@ function(object)
 # Layout the object information in a matrix for pretty-printing
 
 
-setMethod("prettyMatrix", "cdbkTech",
+setMethod("prettyMatrix", "varTech",
 function(object)
 {
     m <- matrix("", 3, 4)
@@ -364,7 +303,7 @@ if(FALSE)
 
 
 
-setMethod("cdbkTxt", "cdbkTech",
+setMethod("cdbkTxt", "varTech",
 function(object, file="", append=TRUE, ...)
 {
     m <- prettyMatrix(object)
@@ -404,7 +343,7 @@ if(FALSE)
 
 
 
-setMethod("cdbkTxt", "cdbkFreq",
+setMethod("cdbkTxt", "varFreq",
 function(object, file="", append=FALSE, ...)
 {
     d <- data.frame(n=object@freq, pct=object@pct, row.names=object@labels)
@@ -434,46 +373,8 @@ function(object, ...)
 } )
 
 
-setMethod("cdbkTxt", "cdbkData",
-function(object, file="", append=FALSE,
-    title="Dataset documentation")
-# file = name of the connection where to write results, if "" then to console
-# append = if file!="" then whether to append the file
-# title = informative title at the top of the printout
-{
-    wd <- getOption("cdbkHeaderWidth")
-    titlen <- nchar(title)
-    # centered title
-    titline <- paste( paste(rep(" ", (wd-titlen)%/%2), collapse=""),
-	title,
-	paste(rep(" ", (wd-titlen)%/%2), collapse=""),
-	sep="" )
-    cat(titline, "\n", file=file, append=append, sep="")
-    cat("\n\n\n", file=file, append=TRUE)
-    cat("Dataset name: ", object@name, "\n", file=file, append=TRUE)
-    cat("Number of cases: ", object@dat@ncases, "\n", file=file, append=TRUE)
-    cat("Number of variables: ", object@dat@nvars, "\n", file=file, append=TRUE)
-    cat("Number of complete cases: ", object@dat@ncomplete, "\n", file=file, append=TRUE)
-    cat("Size [bytes]: ", object@dat@size, "\n", file=file, append=TRUE)
-    cat("Number of documented variables: ", length(object@vars), "\n", file=file, append=TRUE)
-    cat("\n\n", file=file, append=TRUE)
-    cdbkTxt( object@vars, file=file, append=TRUE)
-} )
-
-
 
     
-
-
-if(FALSE)
-{
-    d <- data.frame( n=rnorm(10), f=factor(1:10), ch=letters[1:5])
-    o <- cdbkTech(d)
-    cdbkTxt(o)
-    cdbkTxt(o, file="dupa2.txt")
-}
-
-
 
 
 
