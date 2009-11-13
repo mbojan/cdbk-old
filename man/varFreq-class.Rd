@@ -1,13 +1,11 @@
-\name{cdbkFreq-class}
+\name{varFreq-class}
 \Rdversion{1.1}
 \docType{class}
-\alias{cdbkFreq-class}
-\alias{cdbkTxt,cdbkFreq-method}
-
+\alias{varFreq-class}
 \title{Frequency table}
 \description{Class representing an extended frequency table including count and percentage columns.}
 \section{Objects from the Class}{
-Objects can be created by calls of the form \code{new("cdbkFreq", ...)}.
+Objects can be created by calls of the form \code{new("varFreq", ...)}.
 }
 \section{Slots}{
 	 \describe{
@@ -19,14 +17,13 @@ Objects can be created by calls of the form \code{new("cdbkFreq", ...)}.
 }
 \section{Extends}{
 Class \code{"\linkS4class{cdbkVar}"}, directly.
-Class \code{"\linkS4class{cdbkObject}"}, by class "cdbkVar", distance 2.
 }
 \section{Methods}{
   \describe{
-    \item{cdbkTxt}{\code{signature(object = "cdbkFreq")}: print the table in plain text}
+    \item{cdbkTxt}{\code{signature(object = "varFreq")}: print the table in plain text}
 	 }
 }
 \examples{
-showClass("cdbkFreq")
+showClass("varFreq")
 }
 \keyword{classes}
