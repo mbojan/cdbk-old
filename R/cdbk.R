@@ -243,7 +243,7 @@ function(object)
 
 
 
-setMethod("show", "cdbkDf",
+setMethod("show", "dfTech",
 function(object)
 {
     cat("Data frame summary\n")
