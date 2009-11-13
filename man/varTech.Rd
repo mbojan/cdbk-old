@@ -1,14 +1,14 @@
-\name{cdbkTech}
-\alias{cdbkTech}
+\name{varTech}
+\alias{varTech}
 \docType{methods}
-\alias{cdbkTech-methods}
-\alias{cdbkTech,cdbkVector-method}
+\alias{varTech-methods}
+\alias{varTech,cdbkVector-method}
 \title{Variable summary: simple technical information}
 \description{
 Creates a simple "technical" summary of the variable.
 }
 \usage{
-cdbkTech(object, ...)
+varTech(object, ...)
 }
 \arguments{
   \item{object}{vector, basic \R\ classes are supported, see
@@ -16,7 +16,7 @@ cdbkTech(object, ...)
   \item{\dots}{other arguments, currently ignored}
 }
 \details{
-This function produces object of class \linkS4class{cdbkTech}
+This function produces object of class \linkS4class{varTech}
 which contains basic technical description of a variable.
 See the description of the class.
 }
@@ -36,9 +36,9 @@ of the variable supplied in \code{object}:
 }}
 }
 \value{
-Object of class \linkS4class{cdbkTech}.
+Object of class \linkS4class{varTech}.
 }
-\seealso{Description of the class \linkS4class{cdbkTech}}
+\seealso{Description of the class \linkS4class{varTech}}
 \examples{
 # TODO add examples
 }
