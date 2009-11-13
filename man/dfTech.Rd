@@ -1,22 +1,22 @@
-\name{cdbkDf}
-\alias{cdbkDf}
+\name{dfTech}
+\alias{dfTech}
 \docType{methods}
-\alias{cdbkDf-methods}
-\alias{cdbkDf,data.frame-method}
+\alias{dfTech-methods}
+\alias{dfTech,data.frame-method}
 \title{Constructing data-level documentation}
 \description{
 This is a generic function for creating objects of class
-\linkS4class{cdbkDf} containing data-level information.
+\linkS4class{dfTech} containing data-level information.
 }
 \usage{
-cdbkDf(object, ...)
+dfTech(object, ...)
 }
 \arguments{
   \item{object}{\R\ object, see Details and Methods}
   \item{\dots}{other arguments passed to/from other methods}
 }
 \details{
-This function is a constructor for objects of class \linkS4class{cdbkDf}.
+This function is a constructor for objects of class \linkS4class{dfTech}.
 These objects contain data level information that is usually printed
 in the begining of a codebook. See the description of the class
 for available slots.
@@ -29,11 +29,11 @@ number of complete cases, and the size of the data object in bytes (as in \R
 workspace).}
 }}
 \value{
-Object of class \linkS4class{cdbkDf}.
+Object of class \linkS4class{dfTech}.
 }
-\seealso{Description of class \linkS4class{cdbkDf}}
+\seealso{Description of class \linkS4class{dfTech}}
 \examples{
 d <- data.frame(x=1:5, y=letters[1:5])
-o <- cdbkDf(d)
+o <- dfTech(d)
 o
 }
