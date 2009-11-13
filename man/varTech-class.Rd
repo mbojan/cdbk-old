@@ -1,13 +1,13 @@
-\name{cdbkTech-class}
+\name{varTech-class}
 \docType{class}
-\alias{cdbkTech-class}
-\alias{show,cdbkTech-method}
+\alias{varTech-class}
+\alias{show,varTech-method}
 
 \title{Object for technical variable summary}
 \description{Objects of this class contain simple "technical"
 summary information of a variable.}
 \section{Objects from the Class}{
-Objects can be created by generic \code{\link{cdbkTech}}.
+Objects can be created by generic \code{\link{varTech}}.
 }
 \section{Slots}{
   \describe{
@@ -29,14 +29,13 @@ Class \code{"\linkS4class{cdbkObject}"}, by class "cdbkVar", distance 2.
 }
 \section{Methods}{
   \describe{
-    \item{cdbkTxt}{\code{signature(object = "cdbkTech")}: ... }
-    \item{prettyMatrix}{\code{signature(object = "cdbkTech")}: ... }
-    \item{show}{\code{signature(object = "cdbkTech")}: ... }
+    \item{prettyMatrix}{\code{signature(object = "varTech")}: ... }
+    \item{show}{\code{signature(object = "varTech")}: ... }
 	 }
 }
 \seealso{
-Constructor for this class \code{\link{cdbkTech}}.
+Constructor for this class \code{\link{varTech}}.
 }
 \examples{
-showClass("cdbkTech")
+showClass("varTech")
 }
