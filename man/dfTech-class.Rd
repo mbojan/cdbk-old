@@ -1,13 +1,13 @@
-\name{cdbkDf-class}
+\name{dfTech-class}
 \docType{class}
-\alias{cdbkDf-class}
-\alias{show,cdbkDf-method}
+\alias{dfTech-class}
+\alias{show,dfTech-method}
 
-\title{Data-level documentation objects}
+\title{Technical information about a dataset}
 \description{Objects of this class contain data-level summary
-information.}
+information. It is rather technical.}
 \section{Objects from the Class}{
-Objects can be created by calls to \code{\link{cdbkDf}} generic.
+Objects can be created by calls to \code{\link{dfTech}} generic.
 }
 \section{Slots}{
 	 \describe{
@@ -18,15 +18,15 @@ Objects can be created by calls to \code{\link{cdbkDf}} generic.
   }
 }
 \section{Extends}{
-Class \code{"\linkS4class{cdbkObject}"}, directly.
+Class \code{"\linkS4class{cdbkDf}"}, directly.
 }
 \section{Methods}{
   \describe{
-    \item{cdbkData}{\code{signature(dat = "cdbkDf", vars = "list")}: ... }
-    \item{show}{\code{signature(object = "cdbkDf")}: ... }
+    \item{show}{\code{signature(object = "cdbkDf")}: Display the content of the
+    object. }
 	 }
 }
 \seealso{
-Constructor \code{\link{cdbkDf}} to create objects of this class as well as
+Constructor \code{\link{dfTech}} to create objects of this class as well as
 some examples.
 }
