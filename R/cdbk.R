@@ -211,7 +211,7 @@ function(object,
     size=object.size(object), ...)
 {
     # calculate the number of complete observations and create the object
-    new("cdbkDf", ncases=ncases, nvars=nvars,
+    new("dfTech", ncases=ncases, nvars=nvars,
 	ncomplete=sum( completeCases(object) ),
 	size=size )
 } )
