@@ -124,8 +124,6 @@ setGeneric("varTech", function(object, ...) standardGeneric("varTech"))
 setGeneric("varFreq", function(object, ...) standardGeneric("varFreq"))
 setGeneric("dfTech", function(object, ...) standardGeneric("dfTech"))
 
-setGeneric("cdbkTxt", function(object, ...) standardGeneric("cdbkTxt"))
-
 
 # misc utilities
 setGeneric("prettyMatrix", function(object) standardGeneric("prettyMatrix"))
@@ -294,83 +292,6 @@ if(FALSE)
 {
     prettyMatrix(cdbkTech(of))
 }
-
-
-#===============================================================================
-# pretty printing to text format
-#===============================================================================
-
-
-
-
-setMethod("cdbkTxt", "varTech",
-function(object, file="", append=TRUE, ...)
-{
-    m <- prettyMatrix(object)
-    wd <- getOption("cdbkHeaderWidth")
-    # begin writing with a header
-    cat( paste( paste(rep("=", wd), collapse=""), "\n", sep=""),
-	append=append, file=file)
-    cat( "[", object@varname, "]", "\n", sep="", append=TRUE, file=file)
-    cat( paste( paste(rep("=", wd), collapse=""), "\n", sep=""),
-	append=TRUE, file=file)
-    out <- apply(m, 1, txtPrettyRow)
-    dimnames(out) <- list( rep("", nrow(out)), rep("", ncol(out)))
-    if(file=="")
-    {
-	print( t(out), quote=FALSE, print.gap=4)
-	cat("\n\n")
-    }
-    else {
-	sink(file=file, append=TRUE)
-	print( t(out), quote=FALSE, print.gap=4)
-	cat("\n\n\n")
-	sink()
-    }
-} )
-
-
-if(FALSE)
-{
-    o <- cdbkTech(of)
-    m <- prettyMatrix(o)
-    cdbkTxt(o)
-    cdbkTxt(o, file="dupa.txt")
-}
-
-
-
-
-
-
-setMethod("cdbkTxt", "varFreq",
-function(object, file="", append=FALSE, ...)
-{
-    d <- data.frame(n=object@freq, pct=object@pct, row.names=object@labels)
-    if(file=="")
-	print(d, quote=FALSE)
-    else
-    {
-	sink(file=file, append=TRUE)
-	print( d, quote=FALSE, print.gap=4)
-	cat("\n\n\n")
-	sink()
-    }
-} )
-
-
-#===============================================================================
-# methods for data frames
-#===============================================================================
-
-
-
-setMethod("cdbkTxt", "list",
-function(object, ...)
-{
-    # TODO Add a check, whether components are of proper class
-    invisible(lapply(object, cdbkTxt, ...))
-} )
 
 
 

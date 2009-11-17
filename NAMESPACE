@@ -2,7 +2,6 @@ exportPattern("^[[:alpha:]]+")
 
 exportMethods(
     "dfTech",
-    "cdbkTxt",
     "prettyMatrix",
     "show",
     "varTech",
