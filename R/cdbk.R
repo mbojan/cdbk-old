@@ -256,6 +256,15 @@ function(object)
 
 
 
+setMethod("show", "varFreq",
+function(object)
+{
+    d <- data.frame( n=object@freq,
+        pct=object@pct,
+        row.names=object@labels )
+    show(d)
+    cat("\n")
+} )
 
 
 
