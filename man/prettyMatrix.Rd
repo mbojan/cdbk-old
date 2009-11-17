@@ -1,7 +1,7 @@
 \name{prettyMatrix}
 \docType{methods}
 \alias{prettyMatrix-methods}
-\alias{prettyMatrix,cdbkTech-method}
+\alias{prettyMatrix,varTech-method}
 \alias{prettyMatrix}
 \title{Helper function for setting-up object printing}
 \description{
@@ -16,7 +16,7 @@ prettyMatrix(object)
 \section{Methods}{
 \describe{
 
-\item{object = "cdbkTech"}{The information from the object is set-up in a
+\item{object = "varTech"}{The information from the object is set-up in a
 3-by-4 matrix such that columns 1 and 3 contain labels and columns 2 an 4
 contain data.}
 }}

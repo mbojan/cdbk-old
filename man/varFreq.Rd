@@ -12,6 +12,7 @@ varFreq(object, ...)
 \arguments{
   \item{object}{R object}
   \item{\dots}{other arguments passed to other methods}
+}
 \details{
 This is a generic function currently with method for objects of class
 "\linkS4class{cdbkVector}".
