@@ -8,7 +8,13 @@ Contents
 =============================================================================
 TODO
 
-Namespace exports everything. Shouldn't.
+Make cdbkOpts accept list as an argument
+
+Main interface: the 'cdbk' function.
+
+Writing to LaTeX: (1) through 'xtable' (2) own printer.
+
+Namespace exports everything non-dotted. Shouldn't.
 
 Add CITATION file
 
