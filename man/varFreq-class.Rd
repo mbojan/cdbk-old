@@ -2,6 +2,7 @@
 \Rdversion{1.1}
 \docType{class}
 \alias{varFreq-class}
+\alias{show,varFreq-method}
 \title{Frequency table}
 \description{Class representing an extended frequency table including count and percentage columns.}
 \section{Objects from the Class}{
