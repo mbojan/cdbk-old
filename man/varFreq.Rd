@@ -2,7 +2,7 @@
 \docType{methods}
 \alias{varFreq}
 \alias{varFreq-methods}
-\alias{varFreq,cdbkVector-method}
+\alias{varFreq,ANY-method}
 \title{Variable frequency table}
 \description{Compute variable frequency table with counts and frequencies,
 including NAs.}

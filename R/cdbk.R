@@ -171,7 +171,7 @@ function(object, varname=NULL,
 
 
 
-setMethod("varFreq", "cdbkVector",
+setMethod("varFreq", "ANY",
 function(object, varname=NULL, ...)
 {
     if(is.null(varname))
@@ -179,8 +179,8 @@ function(object, varname=NULL, ...)
     else vname <- varname
         tab <- table(object, exclude=NULL)
     new("varFreq", varname=vname, freq=as.numeric(tab),
-	pct=as.numeric(tab/sum(tab)*100),
-	labels=paste(names(tab)) )
+        pct=as.numeric(tab/sum(tab)*100),
+        labels=paste(names(tab)) )
 } )
     
     
